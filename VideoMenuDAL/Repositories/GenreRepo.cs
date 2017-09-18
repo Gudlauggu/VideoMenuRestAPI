@@ -8,11 +8,11 @@ using VideoMenuDAL.Entities;
 
 namespace VideoMenuDAL.Repositories
 {
-    class GenreRepoEFMemory : IGenreRepository
+    class GenreRepo : IGenreRepository
     {
-        InMemoryContext context;
+        VideoAppContext context;
 
-        public GenreRepoEFMemory(InMemoryContext context)
+        public GenreRepo(VideoAppContext context)
         {
             this.context = context;
         }
@@ -22,6 +22,18 @@ namespace VideoMenuDAL.Repositories
             this.context.Genres.Add(gen);
 
             return gen;
+        }
+
+        public Genre Delete(int Id)
+        {
+            var genre = Get(Id);
+            this.context.Genres.Remove(genre);
+            return genre;
+        }
+
+        public Genre Get(int Id)
+        {
+            return this.context.Genres.FirstOrDefault(g => g.Id == Id);
         }
 
         public List<Genre> GetAll()

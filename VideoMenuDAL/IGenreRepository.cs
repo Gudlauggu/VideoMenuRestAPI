@@ -11,6 +11,11 @@ namespace VideoMenuDAL
         Genre Create(Genre gen);
 
         List<Genre> GetAll();
-        
+        Genre Get(int Id);
+
+
+
+        Genre Delete(int Id);
+
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using VideoMenuBLL.BusinessObjects;
+using VideoMenuBLL.Converters;
 using VideoMenuDAL;
 using VideoMenuDAL.Entities;
 
@@ -11,6 +12,8 @@ namespace VideoMenuBLL.Services
 {
     class VideoService : IVideoService
     {
+        VideoConverter conv = new VideoConverter();
+
         DALFacade facade;
         public VideoService(DALFacade facade)
         {
@@ -21,9 +24,9 @@ namespace VideoMenuBLL.Services
         {
             using (var uow = facade.UnitOfWork)
             {
-                var newVid = uow.VideoRepository.Create(Convert(vid));
+                var newVid = uow.VideoRepository.Create(conv.Convert(vid));
                 uow.Complete();
-                return Convert(newVid);
+                return conv.Convert(newVid);
             }
              
         }
@@ -34,7 +37,7 @@ namespace VideoMenuBLL.Services
             {
                 var newVid = uow.VideoRepository.Delete(Id);
                 uow.Complete();
-                return Convert(newVid);
+                return conv.Convert(newVid);
             }
         }
 
@@ -42,7 +45,9 @@ namespace VideoMenuBLL.Services
         {
             using (var uow = facade.UnitOfWork)
             {
-                return Convert(uow.VideoRepository.Get(Id));
+                var videoEntity = uow.VideoRepository.Get(Id);
+                videoEntity.Genre = uow.GenreRepository.Get(videoEntity.GenreId);
+                return conv.Convert(videoEntity);
             }
         }
 
@@ -51,7 +56,7 @@ namespace VideoMenuBLL.Services
             using (var uow = facade.UnitOfWork)
             {
                 //return uow.VideoRepository.GetAll();
-                return uow.VideoRepository.GetAll().Select(v => Convert(v)).ToList();
+                return uow.VideoRepository.GetAll().Select(v => conv.Convert(v)).ToList();
             }
         }
 
@@ -62,34 +67,16 @@ namespace VideoMenuBLL.Services
                 var videoFromDb = uow.VideoRepository.Get(vid.Id);
                 if (videoFromDb == null)
                 {
-                    throw new InvalidOperationException("Customer not found");
+                    throw new InvalidOperationException("Video not found");
                 }
                 videoFromDb.Name = vid.Name;
                 
                 uow.Complete();
-                return Convert(videoFromDb);
+                return conv.Convert(videoFromDb);
             }
             
         }
 
-        private Video Convert(VideoBO vid)
-        {
-            return new Video()
-            {
-                Id = vid.Id,
-                Name = vid.Name,
-                
-            };
-        }
-
-        private VideoBO Convert(Video vid)
-        {
-            return new VideoBO()
-            {
-                Id = vid.Id,
-                Name = vid.Name,
-                
-            };
-        }
+        
     }
 }

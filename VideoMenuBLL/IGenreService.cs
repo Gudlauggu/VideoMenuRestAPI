@@ -11,8 +11,10 @@ namespace VideoMenuBLL
         GenreBO Create(GenreBO gen);
 
         List<GenreBO> GetAll();
+        GenreBO Get(int Id);
         GenreBO Update(GenreBO gen);
+        GenreBO Delete(int Id);
 
-        
+
     }
 }

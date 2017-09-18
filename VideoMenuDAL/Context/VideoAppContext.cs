@@ -5,13 +5,13 @@ using VideoMenuDAL.Entities;
 
 namespace VideoMenuDAL.Context
 {
-    class InMemoryContext : DbContext
+    class VideoAppContext : DbContext
     {
-        private static DbContextOptions<InMemoryContext> options =
-            new DbContextOptionsBuilder<InMemoryContext>().UseInMemoryDatabase("TheDB").Options;
+        private static DbContextOptions<VideoAppContext> options =
+            new DbContextOptionsBuilder<VideoAppContext>().UseInMemoryDatabase("TheDB").Options;
 
 
-        public InMemoryContext() : base(options)
+        public VideoAppContext() : base(options)
         {
             
         }

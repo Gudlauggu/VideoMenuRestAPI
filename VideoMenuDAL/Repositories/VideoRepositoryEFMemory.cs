@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using VideoMenuDAL.Context;
 using VideoMenuDAL.Entities;
 
@@ -10,16 +11,17 @@ namespace VideoMenuDAL.Repositories
 {
     class VideoRepositoryEFMemory : IVideoRepository
     {
-        InMemoryContext context;
+        VideoAppContext context;
 
 
-        public VideoRepositoryEFMemory(InMemoryContext context)
+        public VideoRepositoryEFMemory(VideoAppContext context)
         {
             this.context = context;
         }
 
         public Video Create(Video vid)
         {
+           
             this.context.Videos.Add(vid);
             
             return vid;
