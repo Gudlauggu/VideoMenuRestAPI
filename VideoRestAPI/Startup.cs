@@ -56,12 +56,14 @@ namespace VideoRestAPI
                 facade.VideoService.Create(
                     new VideoBO()
                     {
-                        Name = "Avengers"
-                    });
+                        Name = "Avengers",
+                        GenreId = advGenre.Id
+                        });
                 facade.VideoService.Create(
                     new VideoBO()
                     {
-                        Name = "Iron Man"
+                        Name = "Iron Man",
+                        GenreId = comedyGenre.Id
                     });
                 facade.VideoService.Create(
                     new VideoBO()

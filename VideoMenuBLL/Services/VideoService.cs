@@ -70,8 +70,10 @@ namespace VideoMenuBLL.Services
                     throw new InvalidOperationException("Video not found");
                 }
                 videoFromDb.Name = vid.Name;
+                videoFromDb.GenreId = vid.GenreId;
                 
                 uow.Complete();
+                videoFromDb.Genre = uow.GenreRepository.Get(videoFromDb.GenreId);
                 return conv.Convert(videoFromDb);
             }
             
