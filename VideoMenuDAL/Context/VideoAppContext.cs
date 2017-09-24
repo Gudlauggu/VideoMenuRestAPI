@@ -18,9 +18,9 @@ namespace VideoMenuDAL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (optionsBuilder.IsConfigured)
+            if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=tcp:cs2017.database.windows.net,1433;Initial Catalog=CS2017;Persist Security Info=False;User ID=gudlauggu@gmail.com;Password=Korter05;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer(@"Server=tcp:videomenuserver.database.windows.net,1433;Initial Catalog=VideoMenuDB;Persist Security Info=False;User ID=gudlaug;Password=Banana13;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
